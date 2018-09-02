@@ -1,34 +1,35 @@
 {
-    "AWSEBDockerrunVersion": 2,
-    "containerDefinitions": [
-        {
-            "name": "client",
-            "image": "blouiecubero/multi-client",
-            "hostname": "client",
-            "essential": false
-        },
-        {
-            "name": "server",
-            "image": "blouiecubero/multi-server",
-            "hostname": "api",
-            "essential": false
-        },
-        {
-            "name": "worker",
-            "image": "blouiecubero/multi-worker",
-            "essential": false
-        },
-        {
-            "name": "nginx",
-            "image": "blouiecubero/multi-nginx",
-            "essential": true,
-            "portMappings": [
-                {
-                    "hostPort": 80,
-                    "containerPort": 80
-                }
-            ],
-            "links": ["client", "server"]
-        }
-    ]
+	"AWSEBDockerrunVersion": 2,
+	"containerDefinitions": [{
+			"name": "client",
+			"image": "blouiecubero/multi-client",
+			"hostname": "client",
+			"essential": false,
+			"memory": 128
+		},
+		{
+			"name": "server",
+			"image": "blouiecubero/multi-server",
+			"hostname": "api",
+			"essential": false,
+			"memory": 128
+		},
+		{
+			"name": "worker",
+			"image": "blouiecubero/multi-worker",
+			"essential": false,
+			"memory": 128
+		},
+		{
+			"name": "nginx",
+			"image": "blouiecubero/multi-nginx",
+			"essential": true,
+			"portMappings": [{
+				"hostPort": 80,
+				"containerPort": 80
+			}],
+			"links": ["client", "server"],
+			"memory": 128
+		}
+	]
 }
