@@ -1,0 +1,27 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+ - docker build -t blouiecubero/react-test -f ./client/Dockerfile.dev .
+
+script:
+  - docker run blouiecubero/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t blouiecubero/multi-client ./client
+  - docker build -t blouiecubero/multi-nginx ./nginx
+  - docker build -t blouiecubero/multi-server ./server
+  - docker build -t blouiecubero/multi-worker ./worker
+
+  # Log in to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  # Take those images to docker 
+  - docker push blouiecubero/multi-client
+  - docker push blouiecubero/multi-nginx
+  - docker push blouiecubero/multi-server
+  - docker push blouiecubero/multi-worker
+  
+
+
